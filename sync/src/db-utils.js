@@ -18,7 +18,7 @@ const querySingleRow = async (args, options) => {
 const getSyncedGenesis = async (options) => {
     return await querySingleRow(
         [
-            `SELECT genesis_time as genesisTime, genesis_height as genesisHeight, chain_id as chainId FROM genesis`,
+            `SELECT genesis_time as "genesisTime", genesis_height as "genesisHeight", chain_id as "chainId" FROM genesis`,
         ],
         options
     );

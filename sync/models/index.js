@@ -57,7 +57,7 @@ db.sequelizeLegacySyncBackendReadOnly = sequelizeLegacySyncBackendReadOnly;
 db.Sequelize = Sequelize;
 
 db.resetDatabase = function resetDatabase({ saveBackup }) {
-  
+
 };
 
 module.exports = db;

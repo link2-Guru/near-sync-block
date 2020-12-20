@@ -329,10 +329,14 @@ async function syncOldNearcoreState() {
         oldestSyncedBlockHeight = oldestSyncedBlock.height;
         console.debug(`The oldest synced block is #${oldestSyncedBlockHeight}`);
     }
+    console.log('genesisHeight', genesisHeight)
     await syncNearcoreBlocks(oldestSyncedBlockHeight - 1, genesisHeight);
 }
 
-async function syncMissingNearcoreState() {
+async function syncMissingNearcoreState(gHeight) {
+
+    genesisHeight = gHeight;
+
     await syncOldNearcoreState();
 
     const latestSyncedBlock = await models.Block.findOne({
@@ -373,6 +377,8 @@ async function syncMissingNearcoreState() {
         await syncMissingNearcoreBlocks(midHeight + 1, highHeight);
     };
 
+    console.log('oldestSyncedBlock.height', oldestSyncedBlock.height);
+    console.log('latestSyncedBlock.height', latestSyncedBlock.height);
     await syncMissingNearcoreBlocks(
         oldestSyncedBlock.height + 1,
         latestSyncedBlock.height - 1
@@ -382,7 +388,6 @@ async function syncMissingNearcoreState() {
 async function syncGenesisState() {
     let genesisTime;
     let genesisChainId;
-    let genesisHeight;
     if (genesisRecordsUrl) {
         // const stream = request({ url: genesisRecordsUrl }).pipe(parser());
         //

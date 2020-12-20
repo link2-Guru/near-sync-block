@@ -36,7 +36,10 @@ async function startLegacySync() {
         genesisHeight = syncedGenesis.genesisHeight;
         genesisTime = syncedGenesis.genesisTime;
         genesisChainId = syncedGenesis.chainId;
+
+
     } else {
+        console.log('else')
         setTimeout(SyncGenesisState, 0);
     }
 
@@ -89,12 +92,11 @@ async function startLegacySync() {
     };
     setTimeout(regularSyncNewNearcoreState, 0);
 
-
-
     const regularSyncMissingNearcoreState = async () => {
         console.log("Starting regular missing nearcore state sync...");
         try {
-            await syncMissingNearcoreState();
+
+            await syncMissingNearcoreState(genesisHeight);
             console.log("Regular missing nearcore state sync is completed.");
         } catch (error) {
             console.warn(
