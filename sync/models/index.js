@@ -8,6 +8,11 @@ const env = process.env.NODE_ENV || "development";
 const dbConfig = require(__dirname + "/../src/config");
 const db = {};
 
+
+console.log('sql',
+{
+  ...dbConfig.legacySyncDatabase
+})
 const sequelizeLegacySyncBackend = new Sequelize(
   dbConfig.legacySyncDatabase.database,
   dbConfig.legacySyncDatabase.username,
@@ -29,10 +34,10 @@ const sequelizeLegacySyncBackendReadOnly = new Sequelize(
       // * http://www.sqlite.org/c3ref/open.html
       // * http://www.sqlite.org/c3ref/c_open_autoproxy.html
       mode: 1,
-    },
-    logging: false,
+    }
   }
 );
+
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (

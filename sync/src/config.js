@@ -2,11 +2,14 @@
 module.exports = {
     nearRpcUrl: process.env.NEAR_RPC_URL || "http://localhost:3030",
     legacySyncDatabase: {
-        dialect: process.env.DATABASE_DIALECT,
-        host: process.env.DATABASE_HOST,
+
         database: process.env.DATABASE_NAME,
         username: process.env.DATABASE_USERNAME,
         password: process.env.DATABASE_PASSWORD,
+
+        dialect: process.env.DATABASE_DIALECT,
+        host: process.env.DATABASE_HOST,
+        port: process.env.DATABASE_PORT,
         logging: process.env.DATABASE_DEBUG === '1' ? true : false
     },
     genesisRecordsUrl: process.env.GENESIS_RECORDS_URL,
