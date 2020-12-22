@@ -19,7 +19,7 @@ const {
     genesisRecordsUrl,
     wampNearNetworkName,
 } = require("./config");
-const { nearRpc } = require("./near");
+const { getNearRpc } = require("./near");
 const { promiseResult, delayFor } = require("./utils");
 
 let genesisHeight;
@@ -214,7 +214,7 @@ async function saveBlocksFromRequests(requests) {
                             let fetchError;
                             for (let retries = 5; retries > 0; --retries) {
                                 try {
-                                    return await nearRpc.chunk(chunk.chunk_hash);
+                                    return await getNearRpc().chunk(chunk.chunk_hash);
                                 } catch (error) {
                                     fetchError = error;
                                     if (error.type === "system") {
@@ -270,7 +270,7 @@ async function syncNearcoreBlocks(topBlockHeight, bottomBlockHeight) {
         //console.debug(`Syncing the block #${syncingBlockHeight}...`);
         requests.push([
             syncingBlockHeight,
-            promiseResult(nearRpc.block({ blockId: syncingBlockHeight })),
+            promiseResult(getNearRpc().block({ blockId: syncingBlockHeight })),
         ]);
         --syncingBlockHeight;
         if (requests.length >= syncFetchQueueSize) {
@@ -285,7 +285,7 @@ async function syncNearcoreBlocks(topBlockHeight, bottomBlockHeight) {
 }
 
 async function syncNewNearcoreState() {
-    const nodeStatus = await nearRpc.status();
+    const nodeStatus = await getNearRpc().status();
     let latestBlockHeight = nodeStatus.sync_info.latest_block_height;
     if (typeof latestBlockHeight !== "number") {
         console.warn(

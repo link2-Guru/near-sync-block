@@ -5,7 +5,7 @@ const {
     syncMissingNearcoreState,
     syncGenesisState,
 } = require("./sync");
-const { nearRpc } = require("./near");
+const { getNearRpc } = require("./near");
 const {
     regularSyncNewNearcoreStateInterval,
     regularSyncMissingNearcoreStateInterval
